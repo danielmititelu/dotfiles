@@ -1,0 +1,45 @@
+{
+    "breadcrumbs.enabled": false,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "editor.inlineSuggest.enabled": true,
+    "editor.minimap.enabled": false,
+    "zenMode.silentNotifications": false,
+    "zenMode.centerLayout": false,
+    "zenMode.fullScreen": false,
+    "zenMode.hideLineNumbers": false,
+    "editor.smoothScrolling": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "yaml": false,
+        "csharp": true
+    },
+    "svelte.enable-ts-plugin": true,
+    "explorer.confirmDelete": false,
+    "git.confirmSync": false,
+    "explorer.confirmDragAndDrop": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "git.enableSmartCommit": true,
+    "workbench.list.smoothScrolling": true,
+    "redhat.telemetry.enabled": true,
+    "remote.SSH.showLoginTerminal": true,
+    "remote.SSH.useLocalServer": false,
+    "remote.SSH.remotePlatform": {
+        "zero.local": "linux"
+    },
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "micropico.pythonPath": "python3",
+    "workbench.layoutControl.enabled": false,
+    "window.commandCenter": true,
+    "terminal.integrated.smoothScrolling": true,
+    "window.zoomLevel": 1,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.perEditorGroup": true,
+    "workbench.editor.limit.value": 1,
+    "workbench.iconTheme": "catppuccin-mocha"
+}
