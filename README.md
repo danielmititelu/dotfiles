@@ -1,9 +1,10 @@
 # Dotfiles
 
-
-## Create symbolic links
+GNU `stow` to create symlink for everything or just some folder
+```
+stow */ # Everything (the '/' ignores the README)
+```
 
 ```
-chmod +x symlink.sh
-./symlink.sh
+stow zsh
 ```
