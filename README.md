@@ -8,3 +8,9 @@ stow */ # Everything (the '/' ignores the README)
 ```
 stow zsh
 ```
+
+### Brew
+Install homebrew packages listed in Brewfile
+```
+brew bundle
+```
