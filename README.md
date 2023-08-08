@@ -14,3 +14,8 @@ Install homebrew packages listed in Brewfile
 ```
 brew bundle
 ```
+
+Dump installed brew packages
+```
+brew bundle dump -f --describe
+```
