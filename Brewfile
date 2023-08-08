@@ -3,8 +3,18 @@ tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 # Shell extension to jump to frequently used directories
 brew "autojump"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
+# Cross-platform make
+brew "cmake"
+# Development kit for the Java programming language
+brew "openjdk"
+# Configurable static site generator
+brew "hugo"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Menu-driven communications program
+brew "minicom"
 # Fast, highly customisable system info script
 brew "neofetch"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -22,6 +32,10 @@ cask "alacritty"
 cask "alfred"
 # Automatic tiling window manager similar to xmonad
 cask "amethyst"
+# Tools for building Android applications
+cask "android-studio"
+# Electronics prototyping platform
+cask "arduino-ide"
 # Desktop password and login vault
 cask "bitwarden"
 # Web browser
@@ -30,6 +44,8 @@ cask "firefox"
 cask "flutter"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
+# Web browser
+cask "google-chrome"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # Peer to peer Bitorrent client
