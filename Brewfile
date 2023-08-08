@@ -3,14 +3,16 @@ tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 # Shell extension to jump to frequently used directories
 brew "autojump"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Cross-platform make
 brew "cmake"
-# Development kit for the Java programming language
-brew "openjdk"
 # Configurable static site generator
 brew "hugo"
+# Color management engine supporting ICC profiles
+brew "little-cms2"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
 # Menu-driven communications program
@@ -19,6 +21,8 @@ brew "minicom"
 brew "neofetch"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Development kit for the Java programming language
+brew "openjdk"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Organize software neatly under a single directory tree (e.g. /usr/local)

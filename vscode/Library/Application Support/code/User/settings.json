@@ -37,7 +37,7 @@
     "workbench.layoutControl.enabled": false,
     "window.commandCenter": true,
     "terminal.integrated.smoothScrolling": true,
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 2,
     "workbench.editor.limit.enabled": true,
     "workbench.editor.limit.perEditorGroup": true,
     "workbench.editor.limit.value": 1,
