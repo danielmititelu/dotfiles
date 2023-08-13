@@ -1,14 +1,14 @@
 tap "armmbed/formulae"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
-# Shell extension to jump to frequently used directories
-brew "autojump"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Cross-platform make
 brew "cmake"
+# Command-line fuzzy finder written in Go
+brew "fzf"
 # Configurable static site generator
 brew "hugo"
 # Color management engine supporting ICC profiles
@@ -29,6 +29,8 @@ brew "ripgrep"
 brew "stow"
 # Simplified and community-driven man pages
 brew "tldr"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 brew "armmbed/formulae/arm-none-eabi-gcc"
 # GPU-accelerated terminal emulator
 cask "alacritty"

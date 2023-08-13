@@ -41,5 +41,6 @@
     "workbench.editor.limit.enabled": true,
     "workbench.editor.limit.perEditorGroup": true,
     "workbench.editor.limit.value": 1,
-    "workbench.iconTheme": "catppuccin-mocha"
+    "workbench.iconTheme": "catppuccin-mocha",
+    "editor.stickyScroll.enabled": true
 }

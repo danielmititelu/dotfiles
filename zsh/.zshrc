@@ -5,11 +5,7 @@
 [ ! -d ~/.config/zsh/zsh-syntax-highlighting ] && 
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh/zsh-syntax-highlighting
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-[ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] || . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
+eval "$(zoxide init zsh --cmd j)"
 
 source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.config/zsh/.p10k.zsh
