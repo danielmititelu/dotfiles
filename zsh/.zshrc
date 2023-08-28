@@ -19,4 +19,4 @@ source ~/.config/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 alias ls='lsd --group-dirs first'
 alias cat='bat -p --paging=never'
 alias v='nvim'
-
+alias lg='lazygit'

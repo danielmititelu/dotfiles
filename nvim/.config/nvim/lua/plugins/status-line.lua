@@ -4,11 +4,15 @@ return {
         'nvim-tree/nvim-web-devicons'
     },
     config = function()
-        vim.opt.showmode = false
         require('lualine').setup {
             options = {
-                theme = "catppuccin"
+                theme = "catppuccin",
+                component_separators = '|',
+                section_separators = '',
             },
+            sections = {
+                lualine_a = { 'buffers' }
+            }
         }
     end
 }
