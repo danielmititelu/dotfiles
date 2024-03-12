@@ -11,7 +11,7 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "github.copilot.enable": {
         "*": true,
-        "plaintext": false,
+        "plaintext": true,
         "markdown": false,
         "scminput": false,
         "yaml": false,
@@ -21,7 +21,6 @@
     "explorer.confirmDelete": false,
     "git.confirmSync": false,
     "explorer.confirmDragAndDrop": false,
-    "diffEditor.ignoreTrimWhitespace": false,
     "git.enableSmartCommit": true,
     "workbench.list.smoothScrolling": true,
     "redhat.telemetry.enabled": true,
@@ -37,19 +36,38 @@
     "workbench.layoutControl.enabled": false,
     "window.commandCenter": false,
     "terminal.integrated.smoothScrolling": true,
-    "window.zoomLevel": 2,
     "workbench.editor.limit.enabled": true,
     "workbench.editor.limit.perEditorGroup": true,
     "workbench.editor.limit.value": 1,
     "workbench.iconTheme": "catppuccin-mocha",
     "editor.stickyScroll.enabled": true,
-    "zenMode.hideTabs": false,
     "files.exclude": {
         "**/*.js": {"when": "$(basename).ts"},
         "**/*.js.map": true,
         "**/*.d.ts.map": true,
-        "**/*.d.ts": true,
+        "**/*.d.ts": {"when": "$(basename).ts"},
     },
-    "workbench.activityBar.visible": false,
-    "workbench.editor.showTabs": false
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "typescript.referencesCodeLens.enabled": true,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "debug.javascript.autoAttachFilter": "disabled",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "window.zoomLevel": 1,
+    "workbench.activityBar.location": "hidden",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.editor.showTabs": "single",
+    "files.autoSave": "afterDelay",
+    "terminal.integrated.defaultProfile.osx": "zsh"
 }
