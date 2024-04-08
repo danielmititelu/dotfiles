@@ -1,0 +1,79 @@
+#| --------------------------------------------------------------------------
+(deflayer template
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _ 
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+-------------------------------------------------------------------------- |#
+
+(defcfg
+  input (iokit-name)
+  output (kext)
+  fallthrough true
+  allow-cmd true
+)
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft up
+  fn   lctl lalt lmet           spc            rmet ralt left down rght
+)
+
+(defalias 
+    fn (around (layer-toggle function) fn)
+    cap (tap-next esc (layer-toggle window))
+    spc (tap-next spc (layer-toggle space))
+    f   (tap-next f lmet)
+    j   (tap-next j rmet)
+    g   (tap-next g lsft) 
+    h   (tap-next h rsft)
+    d   (tap-next d lalt)
+    k   (tap-next k ralt)
+    s   (tap-next s lctl)
+    l   (tap-next l lctl)
+    fir (cmd-button "open -b org.mozilla.firefox")
+    cod (cmd-button "open -b com.microsoft.VSCode")
+    ter (cmd-button "open -b com.googlecode.iterm2")
+)
+        
+(deflayer default
+  _    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  @cap _    @s   @d   @f   @g   @h   @j   @k   @l    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  lmet _    _    @fn            @spc           _    _    _    _    _
+)
+
+(deflayer function
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer space
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    up   _    _    _    \(   \)   _    _    _    _    _
+  _    _    left down rght _    _    {    }    _    _    _    _ 
+  _    _    _    _    _    _    _    [    ]    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer window
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    @ter _    _    _    _    _    _    _    _
+  _    _    _    _    @fir _    _    _    _    _    _    _    _ 
+  _    _    _    @cod @cod _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
