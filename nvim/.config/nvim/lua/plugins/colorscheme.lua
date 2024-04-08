@@ -2,6 +2,7 @@ return {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
+    cond = vim.g.vscode,
     config = function()
         require("catppuccin").setup {
             color_overrides = {
