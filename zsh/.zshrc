@@ -16,6 +16,8 @@ source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.config/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
+export PATH="${PATH}:$HOME/bin"
+
 alias ls='lsd --group-dirs first'
 alias cat='bat -p --paging=never'
 alias v='nvim'
