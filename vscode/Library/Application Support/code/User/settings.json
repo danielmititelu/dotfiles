@@ -1,4 +1,8 @@
 {
+    "workbench.colorCustomizations": {
+        "editor.background": "#101216",
+        "sideBar.background": "#101216"
+    },
     "breadcrumbs.enabled": false,
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "editor.inlineSuggest.enabled": true,
@@ -17,22 +21,14 @@
         "yaml": false,
         "csharp": true
     },
-    "svelte.enable-ts-plugin": true,
     "explorer.confirmDelete": false,
     "git.confirmSync": false,
     "explorer.confirmDragAndDrop": false,
     "git.enableSmartCommit": true,
     "workbench.list.smoothScrolling": true,
-    "redhat.telemetry.enabled": true,
-    "remote.SSH.showLoginTerminal": true,
-    "remote.SSH.useLocalServer": false,
-    "remote.SSH.remotePlatform": {
-        "zero.local": "linux"
-    },
     "[python]": {
         "editor.formatOnType": true
     },
-    "micropico.pythonPath": "python3",
     "workbench.layoutControl.enabled": false,
     "window.commandCenter": false,
     "terminal.integrated.smoothScrolling": true,
@@ -63,11 +59,11 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "window.zoomLevel": 1,
-    "workbench.activityBar.location": "hidden",
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "workbench.editor.showTabs": "single",
+    "terminal.integrated.defaultProfile.osx": "zsh",
     "files.autoSave": "afterDelay",
-    "terminal.integrated.defaultProfile.osx": "zsh"
+    "workbench.activityBar.location": "hidden"
 }
