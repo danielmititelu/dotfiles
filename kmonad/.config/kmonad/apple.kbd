@@ -27,16 +27,16 @@
 
 (defalias 
     fn (around (layer-toggle function) fn)
-    cap (tap-hold-next-release 100 esc (layer-toggle window))
-    spc (tap-hold-next-release 100 spc (layer-toggle space))
-    f   (tap-hold-next-release 100 f lmet)
-    j   (tap-hold-next-release 100 j rmet)
-    g   (tap-hold-next-release 100 g lsft) 
-    h   (tap-hold-next-release 100 h rsft)
-    d   (tap-hold-next-release 100 d lalt)
-    k   (tap-hold-next-release 100 k ralt)
-    s   (tap-hold-next-release 100 s lctl)
-    l   (tap-hold-next-release 100 l lctl)
+    cap (tap-hold 150 esc (layer-toggle window))
+    spc (tap-hold 150 spc (layer-toggle space))
+    f   (tap-hold 150 f lmet)
+    j   (tap-hold 150 j rmet)
+    g   (tap-hold 150 g lsft) 
+    h   (tap-hold 150 h rsft)
+    d   (tap-hold 150 d lalt)
+    k   (tap-hold 150 k ralt)
+    s   (tap-hold 150 s lctl)
+    l   (tap-hold 150 l lctl)
     fir (cmd-button "open -b org.mozilla.firefox")
     cod (cmd-button "open -b com.microsoft.VSCode")
     ter (cmd-button "open -b com.googlecode.iterm2")
@@ -46,9 +46,9 @@
   _    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  @cap _    @s   @d   @f   @g   @h   @j   @k   @l    _    _    _
+  @cap _    @s   @d   @f   @g   @h   @j   @k   @l   _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _
-  lmet _    _    @fn            @spc           _    _    _    _    _
+  lmet _    _    rmet         @spc             @fn  _    _    _    _
 )
 
 (deflayer function
@@ -74,6 +74,6 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    @ter _    _    _    _    _    _    _    _
   _    _    _    _    @fir _    _    _    _    _    _    _    _ 
-  _    _    _    @cod @cod _    _    _    _    _    _    _    _
+  _    _    _    _    @cod _    _    _    _    _    _    _    _
   _    _    _    _              _              _    _    _    _    _
 )

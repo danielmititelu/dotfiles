@@ -51,19 +51,21 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "debug.javascript.autoAttachFilter": "disabled",
-    "diffEditor.ignoreTrimWhitespace": false,
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 2,
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "workbench.editor.showTabs": "single",
     "terminal.integrated.defaultProfile.osx": "zsh",
     "files.autoSave": "afterDelay",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
     "workbench.activityBar.location": "hidden"
 }

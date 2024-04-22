@@ -20,6 +20,8 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 vim.keymap.set("n", "bl", "<cmd>bnext<cr>", opts)
 vim.keymap.set("n", "bh", "<cmd>bprev<cr>", opts)
+vim.keymap.set("n", "<leader>e", "<cmd>lua require('vscode-neovim').call('workbench.view.explorer')<cr>", opts)
+vim.keymap.set("n", "<leader>g", "<cmd>lua require('vscode-neovim').call('workbench.view.scm')<cr>", opts)
 
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
