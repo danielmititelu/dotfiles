@@ -46,7 +46,7 @@
   _    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  @cap _    @s   @d   @f   @g   @h   @j   @k   @l   _    _    _
+  @cap _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _
   lmet _    _    rmet         @spc             @fn  _    _    _    _
 )
@@ -60,7 +60,7 @@
   _    _    _    _              _              _    _    _    _    _
 )
 
-(deflayer space
+(deflayer window
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    up   _    _    _    \(   \)   _    _    _    _    _
@@ -69,7 +69,7 @@
   _    _    _    _              _              _    _    _    _    _
 )
 
-(deflayer window
+(deflayer space
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    @ter _    _    _    _    _    _    _    _

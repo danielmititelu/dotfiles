@@ -54,18 +54,28 @@
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "window.zoomLevel": 2,
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "workbench.editor.showTabs": "single",
+   "window.zoomLevel": 2,
+   "workbench.editor.showTabs": "single",
     "terminal.integrated.defaultProfile.osx": "zsh",
     "files.autoSave": "afterDelay",
     "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
+        "vscodevim.vim": 1
     },
-    "workbench.activityBar.location": "hidden"
+    "workbench.activityBar.location": "hidden",
+    "vim.easymotion": true,
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["<leader>", "m"],
+            "commands": [
+                "bookmarks.toggle"
+            ]
+        },
+        {
+            "before": ["<leader>", "b"],
+            "commands": [
+                "bookmarks.list"
+            ]
+        }
+    ]
 }
