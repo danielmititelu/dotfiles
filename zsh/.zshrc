@@ -11,6 +11,7 @@ HISTZIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
+ZVM_INIT_MODE=sourcing
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -19,14 +20,13 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-eval "$(zoxide init zsh --cmd j)"
-eval "$(fzf --zsh)"
-
 source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.config/zsh/.p10k.zsh
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.config/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+source <(zoxide init zsh --cmd j)
+source <(fzf --zsh)
 
 export PATH="${PATH}:$HOME/bin"
 
