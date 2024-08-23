@@ -34,11 +34,17 @@
     "workbench.editor.showTabs": "single",
     "workbench.iconTheme": "catppuccin-mocha",
     "editor.stickyScroll.enabled": true,
+    "workbench.activityBar.location": "hidden",
+    "workbench.tree.stickyScrollMaxItemCount": 3,
     "files.exclude": {
-        "**/*.js": {"when": "$(basename).ts"},
+        "**/*.js": {
+            "when": "$(basename).ts"
+        },
         "**/*.js.map": true,
         "**/*.d.ts.map": true,
-        "**/*.d.ts": {"when": "$(basename).ts"},
+        "**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
     },
     "[typescript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
@@ -47,12 +53,11 @@
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "debug.javascript.autoAttachFilter": "disabled",
+    "debug.javascript.autoAttachFilter": "onlyWithFlag",
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
-   "window.zoomLevel": 2,
-   "terminal.integrated.defaultProfile.osx": "zsh",
-   "files.autoSave": "afterDelay",
-   "workbench.activityBar.location": "hidden"
+    "window.zoomLevel": 2,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "files.autoSave": "afterDelay"
 }
