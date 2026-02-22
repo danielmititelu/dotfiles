@@ -30,7 +30,7 @@
     "workbench.editor.limit.perEditorGroup": true,
     "workbench.editor.limit.value": 1,
     "workbench.editor.showTabs": "none",
-    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.iconTheme": "catppuccin-latte",
     "editor.stickyScroll.enabled": true,
     "workbench.tree.stickyScrollMaxItemCount": 3,
     "files.exclude": {
