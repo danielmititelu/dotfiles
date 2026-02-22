@@ -1,8 +1,8 @@
 {
-    "workbench.colorCustomizations": {
-        "editor.background": "#101216",
-        "sideBar.background": "#101216"
-    },
+    // "workbench.colorCustomizations": {
+    //     "editor.background": "#101216",
+    //     "sideBar.background": "#101216"
+    // },
     "breadcrumbs.enabled": false,
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "editor.inlineSuggest.enabled": true,
@@ -25,16 +25,13 @@
     "[python]": {
         "editor.formatOnType": true
     },
-    "workbench.layoutControl.enabled": false,
-    "window.commandCenter": false,
     "terminal.integrated.smoothScrolling": true,
     "workbench.editor.limit.enabled": true,
     "workbench.editor.limit.perEditorGroup": true,
     "workbench.editor.limit.value": 1,
-    "workbench.editor.showTabs": "single",
+    "workbench.editor.showTabs": "none",
     "workbench.iconTheme": "catppuccin-mocha",
     "editor.stickyScroll.enabled": true,
-    "workbench.activityBar.location": "hidden",
     "workbench.tree.stickyScrollMaxItemCount": 3,
     "files.exclude": {
         "**/*.js": {
@@ -59,5 +56,18 @@
     },
     "window.zoomLevel": 2,
     "terminal.integrated.defaultProfile.osx": "zsh",
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "workbench.activityBar.location": "hidden",
+    "workbench.colorTheme": "Pitch Black",
+    "workbench.statusBar.visible": false,
+    "workbench.layoutControl.enabled": false,
+    "window.commandCenter": false,
+    "editor.hover.enabled": "onKeyboardModifier",
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.quickSuggestions": {
+        "other": "on",
+        "comments": "off",
+        "strings": "off"
+    },
+    "window.title": "${folderName}/${activeFolderShort}/${activeEditorShort} ${activeRepositoryBranchName}${profileName}${separator}"
 }
