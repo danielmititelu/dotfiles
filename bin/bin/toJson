@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# Determine clipboard command based on OS
+if command -v pbpaste >/dev/null 2>&1; then
+  # macOS
+  CLIP_IN="pbpaste"
+  CLIP_OUT="pbcopy"
+elif command -v xclip >/dev/null 2>&1; then
+  # Linux with xclip
+  CLIP_IN="xclip -selection clipboard -o"
+  CLIP_OUT="xclip -selection clipboard"
+else
+  echo "No clipboard tool found (install pbcopy/pbpaste or xclip)"
+  exit 1
+fi
+
+# Read CSV from clipboard
+CSV_DATA="$($CLIP_IN)"
+
+# Extract header
+HEADER=$(printf "%s\n" "$CSV_DATA" | head -n 1)
+IFS=',' read -r -a KEYS <<< "$HEADER"
+
+# Build JSON
+JSON="["
+FIRST=true
+printf "%s\n" "$CSV_DATA" | tail -n +2 | while IFS=',' read -r -a VALUES; do
+  if [ "$FIRST" = true ]; then
+    FIRST=false
+  else
+    JSON="${JSON},"
+  fi
+  JSON="${JSON}{"
+  for i in "${!KEYS[@]}"; do
+    KEY=$(echo "${KEYS[$i]}" | xargs)
+    VALUE=$(echo "${VALUES[$i]}" | xargs)
+    JSON="${JSON}\"$KEY\":\"$VALUE\""
+    [ "$i" -lt $((${#KEYS[@]} - 1)) ] && JSON="${JSON},"
+  done
+  JSON="${JSON}}"
+done
+
+JSON="${JSON}]"
+
+# Output to clipboard
+printf "%s\n" "$JSON" | $CLIP_OUT
+
+echo "CSV converted to JSON and copied to clipboard."

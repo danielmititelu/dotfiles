@@ -1,0 +1,11 @@
+#!/bin/bash
+
+clipboard_content=$(pbpaste)
+clipboard_content=$(echo "$clipboard_content" | tr -d '[:space:]')
+if [[ ! "$clipboard_content" =~ ^-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?$ ]]; then
+    echo "Error: Clipboard content is not in valid lat,lng format (e.g., 12.34,-56.78)"
+    exit 1
+fi
+swapped=$(echo "$clipboard_content" | awk -F',' '{print $2","$1}')
+echo -n "$swapped" | pbcopy
+echo "Swapped coordinates copied to clipboard: $swapped"

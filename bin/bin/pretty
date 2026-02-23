@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    file_paths=$(git status --porcelain | awk '$1 != "D" {print $2}'| grep '\.ts$')
+else
+    file_paths=$(git diff --name-only HEAD~$1 HEAD | grep '\.ts$')
+fi
+formatted_paths=$(echo "$file_paths" | tr '\n' ' ')
+if [ -n "$formatted_paths" ]; then
+    pnpm prettier --write $formatted_paths
+else
+    echo "No TypeScript files to format."
+fi
