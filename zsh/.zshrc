@@ -7,13 +7,12 @@
 [ ! -d ~/.config/zsh/zsh-vi-mode ] &&
   git clone https://github.com/jeffreytse/zsh-vi-mode.git ~/.config/zsh/zsh-vi-mode
 
-HISTZIZE=10000
+HISTZIZE=99999
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 ZVM_INIT_MODE=sourcing
 setopt appendhistory
-setopt sharehistory
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
@@ -32,5 +31,4 @@ export PATH="${PATH}:$HOME/bin"
 
 alias ls='lsd --group-dirs first'
 alias cat='bat -p --paging=never'
-alias v='nvim'
-alias lg='lazygit'
+

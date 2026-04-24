@@ -1,8 +1,4 @@
 {
-    // "workbench.colorCustomizations": {
-    //     "editor.background": "#101216",
-    //     "sideBar.background": "#101216"
-    // },
     "breadcrumbs.enabled": false,
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "editor.inlineSuggest.enabled": true,
@@ -46,7 +42,7 @@
     "[typescript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
-    "typescript.referencesCodeLens.enabled": true,
+    "js/ts.referencesCodeLens.enabled": true,
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
@@ -59,15 +55,10 @@
     "files.autoSave": "afterDelay",
     "workbench.activityBar.location": "hidden",
     "workbench.colorTheme": "Pitch Black",
-    "workbench.statusBar.visible": false,
+    "workbench.statusBar.visible": true,
     "workbench.layoutControl.enabled": false,
     "window.commandCenter": false,
-    "editor.hover.enabled": "onKeyboardModifier",
-    "editor.suggestOnTriggerCharacters": false,
-    "editor.quickSuggestions": {
-        "other": "on",
-        "comments": "off",
-        "strings": "off"
-    },
-    "window.title": "${folderName}/${activeFolderShort}/${activeEditorShort} ${activeRepositoryBranchName}${profileName}${separator}"
+    "python.terminal.activateEnvironment": false,
+    "terminal.integrated.initialHint": false,
+    "git.blame.editorDecoration.enabled": true
 }
