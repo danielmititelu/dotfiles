@@ -1,4 +1,5 @@
 #!/bin/bash
+# desc: Swap lat,lng coordinates from the clipboard
 
 clipboard_content=$(pbpaste)
 clipboard_content=$(echo "$clipboard_content" | tr -d '[:space:]')

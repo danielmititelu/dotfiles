@@ -1,0 +1,26 @@
+#compdef dot
+# Completion for the `dot` dispatcher.
+# Dynamically discovers sibling scripts by reading their '# desc:' header comment.
+
+_dot() {
+    local script_dir="$HOME/bin/commands"
+    local -a commands
+    local f name desc
+
+    for f in "$script_dir"/*; do
+        name="${f:t}"
+        [[ -x "$f" ]] || continue
+        desc=$(head -5 "$f" 2>/dev/null | grep '^# desc:' | sed 's/^# desc:[[:space:]]*//')
+        commands+=("$name:${desc:-No description}")
+    done
+
+    _arguments -C '1: :->cmd' '*::arg:->args'
+
+    case $state in
+        cmd)
+            _describe -t commands 'dot command' commands
+            ;;
+    esac
+}
+
+_dot "$@"

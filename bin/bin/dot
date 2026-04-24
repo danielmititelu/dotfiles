@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# dot - single entrypoint for personal bin scripts.
+# Usage: dot <command> [args...]   |   dot
+
+set -eu
+
+# Resolve the directory containing this script (follows symlinks created by stow).
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+    DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+    SOURCE="$(readlink "$SOURCE")"
+    [ "${SOURCE#/}" = "$SOURCE" ] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)/commands"
+
+# Auto-discover executables that carry a '# desc:' comment.
+# Prints one "name|description" line per command, sorted by name.
+discover() {
+    local f name desc
+    for f in "$SCRIPT_DIR"/*; do
+        name="$(basename "$f")"
+        [ -x "$f" ] || continue
+        desc="$(head -5 "$f" | grep '^# desc:' | sed 's/^# desc:[[:space:]]*//')"
+        printf '%s|%s\n' "$name" "${desc:-No description}"
+    done | sort
+}
+
+print_help() {
+    local line name desc max=0
+    while IFS= read -r line; do
+        name="${line%%|*}"
+        [ ${#name} -gt $max ] && max=${#name}
+    done < <(discover)
+
+    echo "Usage: dot <command> [args...]"
+    echo
+    echo "Commands:"
+    while IFS= read -r line; do
+        name="${line%%|*}"
+        desc="${line#*|}"
+        printf "  %-*s  %s\n" "$max" "$name" "$desc"
+    done < <(discover)
+}
+
+if [ $# -eq 0 ]; then
+    print_help
+    exit 0
+fi
+
+cmd="$1"
+shift
+
+target="$SCRIPT_DIR/$cmd"
+if [ ! -x "$target" ]; then
+    echo "dot: unknown command '$cmd'" >&2
+    echo "Run 'dot' to see available commands." >&2
+    exit 1
+fi
+
+exec "$target" "$@"

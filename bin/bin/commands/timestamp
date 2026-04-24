@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# desc: Convert a Unix timestamp (seconds or ms) to a human-readable date
+
+set -eu
+
+ts="${1:-}"
+if [ -z "$ts" ]; then
+    if command -v pbpaste >/dev/null 2>&1; then
+        ts="$(pbpaste | tr -d '[:space:]')"
+    fi
+fi
+
+if ! [[ "$ts" =~ ^-?[0-9]+$ ]]; then
+    echo "Usage: timestamp <unix-seconds-or-ms>" >&2
+    echo "       (or copy the number to the clipboard and run with no args)" >&2
+    exit 1
+fi
+
+# Treat 13+ digit values as milliseconds.
+if [ "${#ts}" -ge 13 ]; then
+    ts=$((ts / 1000))
+fi
+
+# macOS BSD date uses -r; GNU date uses -d @<ts>.
+if date -r 0 >/dev/null 2>&1; then
+    date -r "$ts"
+else
+    date -d "@$ts"
+fi

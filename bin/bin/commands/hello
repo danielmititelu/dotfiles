@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# desc: Print a friendly greeting
+echo "Hello World";

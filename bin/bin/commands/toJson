@@ -1,4 +1,5 @@
 #!/bin/sh
+# desc: Convert CSV from the clipboard into a JSON array
 
 # Determine clipboard command based on OS
 if command -v pbpaste >/dev/null 2>&1; then

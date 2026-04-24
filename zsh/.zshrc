@@ -27,6 +27,9 @@ source ~/.config/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source <(zoxide init zsh --cmd j)
 source <(fzf --zsh)
 
+fpath=(~/.config/zsh/completions $fpath)
+autoload -Uz compinit && compinit
+
 export PATH="${PATH}:$HOME/bin"
 
 alias ls='lsd --group-dirs first'

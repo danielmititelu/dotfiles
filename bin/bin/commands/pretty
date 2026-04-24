@@ -1,4 +1,5 @@
 #!/bin/bash
+# desc: Run prettier on changed/staged TypeScript files
 if [ -z "$1" ]; then
     file_paths=$(git status --porcelain | awk '$1 != "D" {print $2}'| grep '\.ts$')
 else
