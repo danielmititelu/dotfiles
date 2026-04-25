@@ -8,3 +8,8 @@ mkdir -p ~/Library/Application\ Support/code/User
 stow -t ~ zsh
 stow -t ~ bin
 stow -t ~ vscode
+
+mkdir -p ~/Library/Fonts
+cp -v fonts/*.ttf ~/Library/Fonts/
+
+echo "Done!"
