@@ -22,4 +22,7 @@ killall Dock
 mkdir -p ~/Library/Fonts
 cp fonts/*.ttf ~/Library/Fonts/
 
+# Set wallpaper
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$PWD/wallpapers/moon.jpg\""
+
 echo "Done!"
