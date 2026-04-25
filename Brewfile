@@ -19,10 +19,6 @@ brew "gum"
 brew "iperf3"
 # Simplified and community-driven man pages
 brew "tldr"
-# Tool to invert scroll direction for physical scroll wheels
-cask "unnaturalscrollwheels"
-# Customise mouse behavior
-cask "linearmouse"
 # Open-source code editor
 cask "visual-studio-code"
 # Web browser
