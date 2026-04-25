@@ -31,8 +31,3 @@ brew bundle dump -f --describe
 ### Fonts
 Meslo Nerd fonts taken from powerlevel10k [repo](https://github.com/romkatv/powerlevel10k/blob/master/font.md) 
 
-### Mac commands
-Show dock instantly
-```
-defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
-```

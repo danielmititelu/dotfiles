@@ -14,6 +14,11 @@ stow -t ~ launchagents
 
 launchctl load ~/Library/LaunchAgents/com.user.nomouseaccel.plist 2>/dev/null || true
 
+# Dock: show instantly with no animation
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -int 0
+killall Dock
+
 mkdir -p ~/Library/Fonts
 cp fonts/*.ttf ~/Library/Fonts/
 
