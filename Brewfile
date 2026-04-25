@@ -27,7 +27,8 @@ cask "firefox"
 cask "google-chrome"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-
+# Automation and app switching
+cask "hammerspoon"
 
 # Open-source cross-platform alternative to AirDrop
 cask "localsend"
@@ -45,9 +46,6 @@ cask "steam"
 cask "vlc"
 # Desktop password and login vault
 cask "bitwarden"
-
-# Automation and app switching
-cask "hammerspoon"
 
 vscode "bradlc.vscode-tailwindcss"
 vscode "catppuccin.catppuccin-vsc"
