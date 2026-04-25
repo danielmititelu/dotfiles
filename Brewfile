@@ -1,96 +1,71 @@
 tap "armmbed/formulae"
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
-# Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
-brew "btop"
-# Cross-platform make
-brew "cmake"
-# Command-line fuzzy finder written in Go
-brew "fzf"
-# Configurable static site generator
-brew "hugo"
-# Color management engine supporting ICC profiles
-brew "little-cms2"
-# Clone of ls with colorful output, file type icons, and more
-brew "lsd"
-# Menu-driven communications program
-brew "minicom"
-# Fast, highly customisable system info script
-brew "neofetch"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
-# Development kit for the Java programming language
-brew "openjdk"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
+tap "sinelaw/fresh"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# Simplified and community-driven man pages
-brew "tldr"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-brew "armmbed/formulae/arm-none-eabi-gcc"
-# GPU-accelerated terminal emulator
-cask "alacritty"
-# Application launcher and productivity software
-cask "alfred"
-# Automatic tiling window manager similar to xmonad
-cask "amethyst"
-# Tools for building Android applications
-cask "android-studio"
-# Electronics prototyping platform
-cask "arduino-ide"
-# Desktop password and login vault
-cask "bitwarden"
+# Tool for glamorous shell scripts
+brew "gum"
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "iperf3"
+# Simplified and community-driven man pages
+brew "tldr"
+# Tool to invert scroll direction for physical scroll wheels
+cask "unnaturalscrollwheels"
+# Customise mouse behavior
+cask "linearmouse"
+# Open-source code editor
+cask "visual-studio-code"
 # Web browser
 cask "firefox"
-# UI toolkit for building applications for mobile, web and desktop
-cask "flutter"
-# Developer targeted fonts with a high number of glyphs
-cask "font-hack-nerd-font"
 # Web browser
 cask "google-chrome"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+
+
+# Open-source cross-platform alternative to AirDrop
+cask "localsend"
+# Open-source software for live streaming and screen recording
+cask "obs"
 # Peer to peer Bitorrent client
 cask "qbittorrent"
 # Imaging utility to install operating systems to a microSD card
 cask "raspberry-pi-imager"
+# Developer platform
+cask "dotnet-sdk"
 # Video game digital distribution service
 cask "steam"
-# Tool to invert scroll direction for physical scroll wheels
-cask "unnaturalscrollwheels"
-# Open-source code editor
-cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+# Desktop password and login vault
+cask "bitwarden"
+
+# Automation and app switching
+cask "hammerspoon"
+
 vscode "bradlc.vscode-tailwindcss"
-vscode "Catppuccin.catppuccin-vsc"
-vscode "Catppuccin.catppuccin-vsc-icons"
-vscode "Dart-Code.dart-code"
-vscode "Dart-Code.flutter"
-vscode "GitHub.copilot"
-vscode "mhutchie.git-graph"
+vscode "catppuccin.catppuccin-vsc"
+vscode "catppuccin.catppuccin-vsc-icons"
+vscode "github.copilot-chat"
 vscode "ms-dotnettools.csharp"
 vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.cmake-tools"
-vscode "ms-vscode.cpptools"
-vscode "ms-vscode.cpptools-extension-pack"
-vscode "ms-vscode.cpptools-themes"
-vscode "ms-vscode.hexeditor"
 vscode "ms-vscode.remote-explorer"
-vscode "paulober.pico-w-go"
-vscode "redhat.vscode-xml"
 vscode "rust-lang.rust-analyzer"
-vscode "streetsidesoftware.code-spell-checker"
 vscode "svelte.svelte-vscode"
-vscode "twxs.cmake"
-vscode "vscodevim.vim"
-vscode "wmaurer.vscode-jumpy"
+vscode "viktorqvarfordt.vscode-pitch-black-theme"
