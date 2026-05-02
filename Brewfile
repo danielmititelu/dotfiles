@@ -17,8 +17,6 @@ brew "zoxide"
 brew "gum"
 # Update of iperf: measures TCP, UDP, and SCTP bandwidth
 brew "iperf3"
-# Simplified and community-driven man pages
-brew "tldr"
 # Open-source code editor
 cask "visual-studio-code"
 # Web browser
@@ -34,8 +32,6 @@ cask "hammerspoon"
 cask "localsend"
 # Open-source software for live streaming and screen recording
 cask "obs"
-# Peer to peer Bitorrent client
-cask "qbittorrent"
 # Imaging utility to install operating systems to a microSD card
 cask "raspberry-pi-imager"
 # Developer platform
