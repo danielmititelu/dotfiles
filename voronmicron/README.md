@@ -1,6 +1,20 @@
 # Voron Micron
 
-Klipper config for a Formbot Micron 180 kit (Manta M8P V2.0, EBB36 CAN V1.2, Klicky probe).
+Klipper config for a Formbot Micron 180 kit.
+
+## Parts
+
+- Mainboard: BTT Manta M8P V2.0 with a CB1
+- Toolhead board: BTT EBB36 CAN V1.2
+- Toolhead: Dragon Burner
+- Extruder: Sherpa Mini, round NEMA14 stepper with a 10T gear
+- Hotend: E3D Revo Voron
+- Probe: Klicky
+- A/B motors: NEMA14
+- Z motors: 4 x NEMA17
+- Stepper drivers: TMC2209
+- Fans: one hotend 2510 axial fan, two part cooling 4010 Blower Fan
+- Web interface: Mainsail
 
 ## Useful commands
 
