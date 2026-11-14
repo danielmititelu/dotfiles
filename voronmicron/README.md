@@ -64,3 +64,29 @@ Z motor names:
 - `QUAD_GANTRY_LEVEL`: square the gantry to the bed with the four Z motors
 - `QUAD_GANTRY_LEVEL HORIZONTAL_MOVE_Z=15`: same, with more clearance for a badly tilted gantry
 - `PROBE_CALIBRATE`: start the Z offset calibration (paper test)
+
+### Fans
+
+- `M106 S255`: part cooling fans at full speed; `S128` is half speed
+- `M107`: part cooling fans off
+- `SET_FAN_SPEED FAN=hotend_fan SPEED=1`: hotend fan on, `SPEED=0` for off; only works while it is the temporary manual fan
+
+### Bed heater
+
+- `M140 S40`: heat the bed to 40 degrees; `M140 S0` switches it off
+- `PID_CALIBRATE HEATER=heater_bed TARGET=60`: tune the bed heater; follow with `SAVE_CONFIG`
+
+### Bed mesh
+
+- `BED_MESH_CALIBRATE`: probe a 5 x 5 grid of the bed; the result shows on the Heightmap page in Mainsail
+
+### Input shaper
+
+- `ACCELEROMETER_QUERY`: read the accelerometer once, to check that it answers
+- `MEASURE_AXES_NOISE`: show the accelerometer noise; the values should be small
+- `SHAPER_CALIBRATE`: measure the X and Y resonances and pick a shaper; follow with `SAVE_CONFIG`
+
+Graphs, over SSH on the CB1 and before it is rebooted:
+
+- `~/klipper/scripts/calibrate_shaper.py /tmp/calibration_data_x_*.csv -o ~/printer_data/config/shaper_x.png`: graph for X
+- `~/klipper/scripts/calibrate_shaper.py /tmp/calibration_data_y_*.csv -o ~/printer_data/config/shaper_y.png`: graph for Y
