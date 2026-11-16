@@ -69,7 +69,6 @@ Z motor names:
 
 - `M106 S255`: part cooling fans at full speed; `S128` is half speed
 - `M107`: part cooling fans off
-- `SET_FAN_SPEED FAN=hotend_fan SPEED=1`: hotend fan on, `SPEED=0` for off; only works while it is the temporary manual fan
 
 ### Bed heater
 
