@@ -75,6 +75,14 @@ Z motor names:
 - `M140 S40`: heat the bed to 40 degrees; `M140 S0` switches it off
 - `PID_CALIBRATE HEATER=heater_bed TARGET=60`: tune the bed heater; follow with `SAVE_CONFIG`
 
+### Filament
+
+Heat the nozzle to the filament's temperature first, for example `M104 S210`.
+
+- `LOAD_FILAMENT`: feed 50 mm into the nozzle; repeat until plastic comes out
+- `LOAD_FILAMENT LENGTH=20`: feed a shorter amount, 50 at most
+- `UNLOAD_FILAMENT`: pull the filament out of the nozzle, then remove it by hand
+
 ### Bed mesh
 
 - `BED_MESH_CALIBRATE`: probe a 5 x 5 grid of the bed; the result shows on the Heightmap page in Mainsail
