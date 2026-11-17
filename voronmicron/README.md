@@ -58,6 +58,7 @@ Z motor names:
 - `QUERY_PROBE`: show the probe state; `TRIGGERED` in the dock or pressed, `open` on the toolhead
 - `Attach_Probe`: pick the probe up from the dock
 - `Dock_Probe`: put the probe back in the dock
+- `Dock_Probe_Unlock`: put the probe back even when it is locked on, for example after a print start was aborted during levelling
 
 ### Levelling and Z offset
 
@@ -90,7 +91,7 @@ Heat the nozzle to the filament's temperature first, for example `M104 S210`.
 ### Input shaper
 
 - `ACCELEROMETER_QUERY`: read the accelerometer once, to check that it answers
-- `MEASURE_AXES_NOISE`: show the accelerometer noise; the values should be small
+- `MEASURE_AXES_NOISE`: show the accelerometer noise; roughly 1 to 100 per axis is normal, 1000 or more points to a problem with the sensor, its power or a noisy fan
 - `SHAPER_CALIBRATE`: measure the X and Y resonances and pick a shaper; follow with `SAVE_CONFIG`
 
 Graphs, over SSH on the CB1 and before it is rebooted:
