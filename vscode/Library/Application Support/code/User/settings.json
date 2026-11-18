@@ -60,5 +60,6 @@
     "window.commandCenter": false,
     "python.terminal.activateEnvironment": false,
     "terminal.integrated.initialHint": false,
-    "git.blame.editorDecoration.enabled": true
+    "git.blame.editorDecoration.enabled": true,
+    "chat.viewSessions.orientation": "stacked"
 }
