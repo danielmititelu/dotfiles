@@ -10,7 +10,17 @@ local appKeys = {
   v = "com.microsoft.VSCode",
   f = "org.mozilla.firefox",
   t = "com.googlecode.iterm2",
+  o = "md.obsidian"
 }
+
+-- Machine-local app keys (e.g. work apps), kept out of the repo.
+-- ~/work/hammerspoon.lua should return a table like { s = "bundle.id" }.
+local workConfig = loadfile(os.getenv("HOME") .. "/work/hammerspoon.lua")
+if workConfig then
+  for key, bundleID in pairs(workConfig() or {}) do
+    appKeys[key] = bundleID
+  end
+end
 
 local function focusOrCycle(bundleID)
   local app = hs.application.get(bundleID)
