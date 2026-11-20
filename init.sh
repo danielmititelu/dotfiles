@@ -11,6 +11,7 @@ stow -t ~ bin
 stow -t ~ vscode
 stow -t ~ hammerspoon
 stow -t ~ launchagents
+stow -t ~ agents
 
 launchctl load ~/Library/LaunchAgents/com.user.nomouseaccel.plist 2>/dev/null || true
 
