@@ -34,4 +34,6 @@ export PATH="${PATH}:$HOME/bin"
 
 alias ls='lsd --group-dirs first'
 alias cat='bat -p --paging=never'
+alias d='dot'
 
+[ -f "$HOME/work/work.zsh" ] && source "$HOME/work/work.zsh"
