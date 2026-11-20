@@ -13,15 +13,22 @@ while [ -L "$SOURCE" ]; do
 done
 SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)/commands"
 
+# Command search path: repo commands plus optional machine-local dirs
+# (e.g. work-specific scripts kept out of the dotfiles repo).
+COMMAND_DIRS=("$SCRIPT_DIR")
+[ -d "$HOME/work/bin" ] && COMMAND_DIRS+=("$HOME/work/bin")
+
 # Auto-discover executables that carry a '# desc:' comment.
 # Prints one "name|description" line per command, sorted by name.
 discover() {
-    local f name desc
-    for f in "$SCRIPT_DIR"/*; do
-        name="$(basename "$f")"
-        [ -x "$f" ] || continue
-        desc="$(head -5 "$f" | grep '^# desc:' | sed 's/^# desc:[[:space:]]*//')"
-        printf '%s|%s\n' "$name" "${desc:-No description}"
+    local d f name desc
+    for d in "${COMMAND_DIRS[@]}"; do
+        for f in "$d"/*; do
+            name="$(basename "$f")"
+            [ -x "$f" ] || continue
+            desc="$(head -5 "$f" | grep '^# desc:' | sed 's/^# desc:[[:space:]]*//')"
+            printf '%s|%s\n' "$name" "${desc:-No description}"
+        done
     done | sort
 }
 
@@ -50,8 +57,15 @@ fi
 cmd="$1"
 shift
 
-target="$SCRIPT_DIR/$cmd"
-if [ ! -x "$target" ]; then
+target=""
+for d in "${COMMAND_DIRS[@]}"; do
+    if [ -x "$d/$cmd" ]; then
+        target="$d/$cmd"
+        break
+    fi
+done
+
+if [ -z "$target" ]; then
     echo "dot: unknown command '$cmd'" >&2
     echo "Run 'dot' to see available commands." >&2
     exit 1

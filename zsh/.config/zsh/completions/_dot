@@ -3,15 +3,19 @@
 # Dynamically discovers sibling scripts by reading their '# desc:' header comment.
 
 _dot() {
-    local script_dir="$HOME/bin/commands"
-    local -a commands
-    local f name desc
+    local -a script_dirs commands
+    local d f name desc
 
-    for f in "$script_dir"/*; do
-        name="${f:t}"
-        [[ -x "$f" ]] || continue
-        desc=$(head -5 "$f" 2>/dev/null | grep '^# desc:' | sed 's/^# desc:[[:space:]]*//')
-        commands+=("$name:${desc:-No description}")
+    script_dirs=("$HOME/bin/commands")
+    [[ -d "$HOME/work/bin" ]] && script_dirs+=("$HOME/work/bin")
+
+    for d in "${script_dirs[@]}"; do
+        for f in "$d"/*; do
+            name="${f:t}"
+            [[ -x "$f" ]] || continue
+            desc=$(head -5 "$f" 2>/dev/null | grep '^# desc:' | sed 's/^# desc:[[:space:]]*//')
+            commands+=("$name:${desc:-No description}")
+        done
     done
 
     _arguments -C '1: :->cmd' '*::arg:->args'

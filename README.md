@@ -17,6 +17,10 @@ To add a new script: drop an executable in `bin/bin/commands/` with a
 `# desc: ...` comment on line 2 (after the shebang) — `dot` and tab-completion
 pick it up automatically.
 
+Machine-local scripts that shouldn't live in this repo (e.g. work-specific
+ones) go in `~/work/bin` — `dot` and tab-completion pick that folder up too
+when it exists.
+
 ### Brew
 Install homebrew packages listed in Brewfile
 ```
