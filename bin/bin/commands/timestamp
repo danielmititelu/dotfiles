@@ -1,29 +1,73 @@
 #!/usr/bin/env bash
-# desc: Convert a Unix timestamp (seconds or ms) to a human-readable date
+# desc: Convert between Unix timestamp and human-readable date (auto-detects direction)
 
 set -eu
 
-ts="${1:-}"
-if [ -z "$ts" ]; then
+input="${1:-}"
+if [ -z "$input" ]; then
     if command -v pbpaste >/dev/null 2>&1; then
-        ts="$(pbpaste | tr -d '[:space:]')"
+        input="$(pbpaste)"
     fi
 fi
 
-if ! [[ "$ts" =~ ^-?[0-9]+$ ]]; then
-    echo "Usage: timestamp <unix-seconds-or-ms>" >&2
-    echo "       (or copy the number to the clipboard and run with no args)" >&2
+# Trim surrounding whitespace.
+input="$(echo "$input" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+if [ -z "$input" ]; then
+    echo "Usage: timestamp <unix-seconds-or-ms> | <iso-date>" >&2
+    echo "       (or copy the value to the clipboard and run with no args)" >&2
     exit 1
 fi
 
-# Treat 13+ digit values as milliseconds.
-if [ "${#ts}" -ge 13 ]; then
-    ts=$((ts / 1000))
+is_gnu_date=0
+if ! date -r 0 >/dev/null 2>&1; then
+    is_gnu_date=1
 fi
 
-# macOS BSD date uses -r; GNU date uses -d @<ts>.
-if date -r 0 >/dev/null 2>&1; then
-    date -r "$ts"
+# Numeric input -> timestamp to date.
+if [[ "$input" =~ ^-?[0-9]+$ ]]; then
+    ts="$input"
+    # Treat 13+ digit values as milliseconds.
+    if [ "${#ts}" -ge 13 ]; then
+        ts=$((ts / 1000))
+    fi
+    if [ "$is_gnu_date" -eq 0 ]; then
+        date -u -r "$ts"
+    else
+        date -u -d "@$ts"
+    fi
+    exit 0
+fi
+
+# Otherwise, parse as a date string -> emit unix seconds.
+if [ "$is_gnu_date" -eq 0 ]; then
+    # BSD date: try common ISO-ish formats. Strip trailing 'Z' (treat as UTC).
+    # Format/value pairs — pad missing fields with zeros so `date -j` doesn't
+    # default them to the current time.
+    parsed="${input%Z}"
+    attempts=(
+        "%Y-%m-%dT%H:%M:%S|$parsed"
+        "%Y-%m-%dT%H:%M:%S|${parsed}:00"
+        "%Y-%m-%d %H:%M:%S|$parsed"
+        "%Y-%m-%d %H:%M:%S|${parsed}:00"
+        "%Y-%m-%dT%H:%M:%S|${parsed}T00:00:00"
+        "%Y-%m-%d %H:%M:%S|${parsed} 00:00:00"
+    )
+    for attempt in "${attempts[@]}"; do
+        fmt="${attempt%%|*}"
+        val="${attempt#*|}"
+        if out="$(date -j -u -f "$fmt" "$val" +%s 2>/dev/null)"; then
+            echo "$out"
+            exit 0
+        fi
+    done
+    echo "Could not parse date: $input" >&2
+    exit 1
 else
-    date -d "@$ts"
+    if out="$(date -u -d "$input" +%s 2>/dev/null)"; then
+        echo "$out"
+        exit 0
+    fi
+    echo "Could not parse date: $input" >&2
+    exit 1
 fi
