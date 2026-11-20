@@ -1,0 +1,374 @@
+#!/usr/bin/env bash
+# desc: Git helpers (subcommands: br, pr)
+
+set -eu
+
+PROJECTS_DIR_DEFAULT="$HOME/work/vault/Projects"
+GH_ORG="bolteu"
+
+usage() {
+    cat <<EOF
+Usage: dot g <subcommand> [options]
+
+Subcommands:
+  br <name>   Create and check out a new branch (wraps 'git checkout -b').
+  pr new      Push current branch, open a draft PR, link it from a Project note.
+  pr list     List your latest 10 PRs in the ${GH_ORG} org and whether they are
+              tracked in vault Projects/ or Archive/ notes.
+
+Run 'dot g <subcommand> --help' for subcommand options.
+EOF
+}
+
+usage_br() {
+    cat <<EOF
+Usage: dot g br <branch-name>
+
+Thin wrapper around 'git checkout -b'. Must be run inside a git repo.
+EOF
+}
+
+usage_pr() {
+    cat <<EOF
+Usage: dot g pr <subcommand>
+
+Subcommands:
+  new     Push current branch and open a draft PR; optionally link it from a
+          vault/Projects/*.md file.
+  list    List your latest 10 PRs in the ${GH_ORG} org and whether they are
+          tracked in vault Projects/ or Archive/ notes.
+EOF
+}
+
+usage_pr_new() {
+    cat <<EOF
+Usage: dot g pr new [options]
+
+For the current branch in the current repo:
+  1. Push with --set-upstream.
+  2. Open a draft PR against the repo's default branch.
+  3. Prompt to pick a vault/Projects/*.md file and append the PR link under
+     a '## Links' section (created if missing). Press 'q' to skip.
+
+Options:
+  -h, --help             Show this help.
+EOF
+}
+
+usage_pr_list() {
+    cat <<EOF
+Usage: dot g pr list [options]
+
+Fetch your latest 10 PRs from the ${GH_ORG} GitHub org and show which ones
+are tracked (linked) in vault Projects/ or Archive/ notes and which are not.
+
+Options:
+  -h, --help             Show this help.
+EOF
+}
+
+require_cmd() {
+    if ! command -v "$1" >/dev/null 2>&1; then
+        echo "g: required command '$1' not found in PATH" >&2
+        exit 1
+    fi
+}
+
+g_pr_list() {
+    local projects_dir="$PROJECTS_DIR_DEFAULT"
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help) usage_pr_list; return 0 ;;
+            *) echo "g pr list: unknown option '$1'" >&2; usage_pr_list >&2; return 1 ;;
+        esac
+    done
+
+    require_cmd gh
+    require_cmd jq
+
+    if ! gh auth status >/dev/null 2>&1; then
+        echo "g: 'gh' is not authenticated. Run: gh auth login" >&2
+        return 1
+    fi
+
+    if [ ! -d "$projects_dir" ]; then
+        echo "g: projects dir not found: $projects_dir" >&2
+        return 1
+    fi
+
+    # Build the set of tracked PR URLs once (Projects plus sibling Archive).
+    local tracked_file archive_dir
+    archive_dir="$(dirname "$projects_dir")/Archive"
+    tracked_file="$(mktemp -t g-prs-tracked.XXXXXX)"
+    trap 'rm -f "$tracked_file"' RETURN
+    grep -rhoE "https://github\.com/${GH_ORG}/[^/]+/pull/[0-9]+" \
+        "$projects_dir" "$archive_dir" 2>/dev/null | sort -u > "$tracked_file" || true
+
+    echo "Fetching your latest 10 PRs from ${GH_ORG}..." >&2
+
+    local pr_json
+    pr_json="$(gh search prs \
+        --author "@me" \
+        --owner "$GH_ORG" \
+        --limit 10 \
+        --json url,number,title,state,repository)"
+
+    local untracked_file tracked_out_file
+    untracked_file="$(mktemp -t g-prs-untracked.XXXXXX)"
+    tracked_out_file="$(mktemp -t g-prs-tracked-out.XXXXXX)"
+    trap 'rm -f "$tracked_file" "$untracked_file" "$tracked_out_file"' RETURN
+
+    local length i url number title state repo_name line
+    length="$(echo "$pr_json" | jq 'length')"
+    for i in $(seq 0 $((length - 1))); do
+        url="$(echo "$pr_json"    | jq -r ".[$i].url")"
+        number="$(echo "$pr_json" | jq -r ".[$i].number")"
+        title="$(echo "$pr_json"  | jq -r ".[$i].title")"
+        state="$(echo "$pr_json"  | jq -r ".[$i].state")"
+        repo_name="$(echo "$pr_json" | jq -r ".[$i].repository.name")"
+        line="- [${repo_name}#${number} ${title}](${url}) — ${state}"
+
+        if grep -Fxq "$url" "$tracked_file"; then
+            echo "$line" >> "$tracked_out_file"
+        else
+            echo "$line" >> "$untracked_file"
+        fi
+    done
+
+    {
+        echo "## Untracked PRs"
+        echo
+        if [ -s "$untracked_file" ]; then
+            cat "$untracked_file"
+        else
+            echo "_(none)_"
+        fi
+        echo
+        echo "## Tracked PRs"
+        echo
+        if [ -s "$tracked_out_file" ]; then
+            cat "$tracked_out_file"
+        else
+            echo "_(none)_"
+        fi
+    } | if command -v gum >/dev/null 2>&1; then
+        gum format --theme=dark
+    else
+        cat
+    fi
+}
+
+if [ $# -eq 0 ]; then
+    usage
+    exit 0
+fi
+
+g_br() {
+    if [ $# -eq 0 ] || [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+        usage_br
+        [ $# -eq 0 ] && return 1 || return 0
+    fi
+    local name="$1"
+    require_cmd git
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "g br: not inside a git repo" >&2
+        return 1
+    fi
+    git checkout -b "$name"
+}
+
+derive_pr_title() {
+    # feature/GUM-111-add-foo-bar -> "GUM-111: add foo bar"
+    # fix/typo                    -> "typo"
+    # plain-branch                -> "plain branch"
+    local branch="$1"
+    local stripped="${branch#*/}"        # drop leading prefix/ if any
+    if [ "$stripped" = "$branch" ]; then
+        # no slash, keep as-is
+        :
+    fi
+    # Match TICKET-### at the start
+    if [[ "$stripped" =~ ^([A-Z]+-[0-9]+)-(.+)$ ]]; then
+        local ticket="${BASH_REMATCH[1]}"
+        local rest="${BASH_REMATCH[2]//-/ }"
+        echo "${ticket}: ${rest}"
+    else
+        echo "${stripped//-/ }"
+    fi
+}
+
+append_pr_to_project() {
+    local file="$1" url="$2" title="$3"
+    local line="- [PR](${url}) - ${title}"
+    if grep -q '^## Links[[:space:]]*$' "$file"; then
+        # Insert line at end of the '## Links' section (before next '## ' or EOF).
+        local tmp
+        tmp="$(mktemp -t g-pr-new.XXXXXX)"
+        awk -v line="$line" '
+            BEGIN { in_links = 0; inserted = 0 }
+            /^## Links[[:space:]]*$/ { print; in_links = 1; next }
+            in_links && /^## / && !inserted {
+                # End of Links section reached; insert before this heading.
+                print line
+                inserted = 1
+                in_links = 0
+                print
+                next
+            }
+            { print }
+            END {
+                if (in_links && !inserted) print line
+            }
+        ' "$file" > "$tmp"
+        mv "$tmp" "$file"
+    else
+        # Append a new Links section.
+        printf '\n## Links\n%s\n' "$line" >> "$file"
+    fi
+}
+
+pick_project_file() {
+    # Reads from /dev/tty, writes choice path to stdout, status messages to stderr.
+    local projects_dir="$1"
+    local files=("$projects_dir"/*.md)
+    if [ ! -e "${files[0]}" ]; then
+        echo "g pr new: no .md files found in $projects_dir" >&2
+        return 1
+    fi
+    {
+        echo
+        echo "Pick a Project to link the PR from (q to skip):"
+        local i=1
+        for f in "${files[@]}"; do
+            printf "  %2d) %s\n" "$i" "$(basename "$f" .md)"
+            i=$((i + 1))
+        done
+    } >&2
+    local choice
+    printf "> " >&2
+    read -r choice </dev/tty || return 1
+    if [ "$choice" = "q" ] || [ -z "$choice" ]; then
+        return 2
+    fi
+    if ! [[ "$choice" =~ ^[0-9]+$ ]] || [ "$choice" -lt 1 ] || [ "$choice" -gt "${#files[@]}" ]; then
+        echo "g pr new: invalid choice '$choice'" >&2
+        return 1
+    fi
+    echo "${files[$((choice - 1))]}"
+}
+
+g_pr_new() {
+    local projects_dir="$PROJECTS_DIR_DEFAULT"
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help) usage_pr_new; return 0 ;;
+            *) echo "g pr new: unknown option '$1'" >&2; usage_pr_new >&2; return 1 ;;
+        esac
+    done
+
+    require_cmd git
+    require_cmd gh
+
+    if ! gh auth status >/dev/null 2>&1; then
+        echo "g pr new: 'gh' is not authenticated. Run: gh auth login" >&2
+        return 1
+    fi
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "g pr new: not inside a git repo" >&2
+        return 1
+    fi
+
+    local repo_root branch base
+    repo_root="$(git rev-parse --show-toplevel)"
+    cd "$repo_root"
+    branch="$(git rev-parse --abbrev-ref HEAD)"
+    case "$branch" in
+        main|master|develop|HEAD)
+            echo "g pr new: refusing to PR from '$branch'; switch to a feature branch first" >&2
+            return 1
+            ;;
+    esac
+
+    base="$(gh repo view --json defaultBranchRef -q '.defaultBranchRef.name' 2>/dev/null || true)"
+    if [ -z "$base" ]; then
+        echo "g pr new: could not determine default branch via gh" >&2
+        return 1
+    fi
+
+    # Make sure we have an up-to-date base ref to compare against.
+    git fetch --quiet origin "$base" || true
+
+    local ahead
+    ahead="$(git rev-list --count "origin/${base}..HEAD" 2>/dev/null || echo 0)"
+    if [ "$ahead" -eq 0 ]; then
+        echo "g pr new: branch '$branch' has no commits ahead of origin/$base; commit first" >&2
+        return 1
+    fi
+
+    local title url
+    title="$(derive_pr_title "$branch")"
+
+    echo "Pushing '$branch'..." >&2
+    git push --set-upstream origin "$branch"
+
+    echo "Opening draft PR: $title" >&2
+    if ! url="$(gh pr create --draft --title "$title" --body "" --base "$base" --head "$branch" 2>&1 | tail -1)"; then
+        echo "g pr new: gh pr create failed" >&2
+        echo "$url" >&2
+        return 1
+    fi
+    echo "Created $url"
+
+    if [ ! -d "$projects_dir" ]; then
+        echo "g pr new: projects dir not found ($projects_dir); skipping link step" >&2
+        return 0
+    fi
+
+    local chosen rc
+    set +e
+    chosen="$(pick_project_file "$projects_dir")"
+    rc=$?
+    set -e
+    case "$rc" in
+        0) append_pr_to_project "$chosen" "$url" "$title"
+           echo "Added to $chosen"
+           ;;
+        2) echo "Skipped Project link step" >&2 ;;
+        *) return "$rc" ;;
+    esac
+}
+
+g_test_picker() {
+    local projects_dir="${1:-$PROJECTS_DIR_DEFAULT}"
+    local chosen rc
+    set +e
+    chosen="$(pick_project_file "$projects_dir")"
+    rc=$?
+    set -e
+    case "$rc" in
+        0) echo "Selected: $chosen" ;;
+        2) echo "Skipped" ;;
+        *) return "$rc" ;;
+    esac
+}
+
+sub="$1"
+shift
+
+case "$sub" in
+    br) g_br "$@" ;;
+    pr)
+        if [ $# -eq 0 ]; then usage_pr; exit 0; fi
+        pr_sub="$1"; shift
+        case "$pr_sub" in
+            new) g_pr_new "$@" ;;
+            list) g_pr_list "$@" ;;
+            -h|--help) usage_pr ;;
+            *) echo "g pr: unknown subcommand '$pr_sub'" >&2; usage_pr >&2; exit 1 ;;
+        esac
+        ;;
+    test-picker) g_test_picker "$@" ;;
+    -h|--help) usage ;;
+    *) echo "g: unknown subcommand '$sub'" >&2; usage >&2; exit 1 ;;
+esac

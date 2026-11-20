@@ -61,5 +61,9 @@
     "python.terminal.activateEnvironment": false,
     "terminal.integrated.initialHint": false,
     "git.blame.editorDecoration.enabled": true,
-    "chat.viewSessions.orientation": "stacked"
+    "chat.viewSessions.orientation": "stacked",
+    "python.analysis.extraPaths": [],
+    "chat.tools.terminal.autoApprove": {
+        "~/bin/dot": true
+    }
 }
